@@ -12,4 +12,4 @@ components.forEach(component => {
 app.mount('#app')
 
 // 09.06.22
-// 01:04:07
+// 01:16:07
