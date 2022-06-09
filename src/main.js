@@ -1,7 +1,15 @@
 import { createApp } from 'vue'
 import App from './App'
+import components from '@/components/UI'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+components.forEach(component => {
+    app.component(component.name, component)
+})
+
+
+app.mount('#app')
 
 // 09.06.22
-// 00:53:53
+// 01:04:07
