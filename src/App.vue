@@ -1,22 +1,30 @@
 <template>
   <div class="app">
     <h1>Страница с постами</h1>
-    <my-button @click="fetchPosts">Получить посты</my-button>
-    <my-button
-      @click="showDialog"
-      style="margin: 15px 0;"
-      >Создать пост
-      </my-button>
+    <div class="app__btns">
+      <!-- <my-button @click="fetchPosts">Получить посты</my-button> -->
+      <my-button
+        @click="showDialog"
+        >
+        Создать пост
+        </my-button>
+      <my-select
+        v-model="selectedSort"
+        :options="sortOptions"
+        
+        />
+    </div>
+    
     <my-dialog v-model:show="dialogVisible">
       <post-form
         @create="createPost"
         />
     </my-dialog>
     <post-list
-      :posts="posts"
+      :posts="sortedPosts"
       @remove="removePost"
       v-if="!isPostsLoading"
-      />
+      ></post-list>
     <div v-else>Идет загрузка...</div>
   </div>
 </template>
@@ -27,19 +35,26 @@ import PostList from './components/PostList.vue'
 import MyDialog from './components/UI/MyDialog.vue'
 import MyButton from './components/UI/MyButton.vue'
 import axios from 'axios'
+import MySelect from './components/UI/MySelect.vue'
 
 export default {
   components: {
     PostList,
     PostForm,
     MyDialog,
-    MyButton
+    MyButton,
+    MySelect
 },
   data() {
     return {
       posts: [],
       dialogVisible: false,
       isPostsLoading: false,
+      selectedSort: '',
+      sortOptions: [
+        {value: 'title', name: 'По названию'},
+        {value: 'body', name: 'По описанию'},
+      ]
     }
   },
   methods: {
@@ -67,6 +82,14 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+  },
+  computed: {
+    sortedPosts() {
+      return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+    }
+  },
+  watch: {
+
   }
 }
 </script>
@@ -81,6 +104,12 @@ export default {
 
 .app {
   padding: 20px;
+}
+
+.app__btns {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
 }
 
 </style>
