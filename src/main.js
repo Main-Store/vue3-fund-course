@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App'
 import components from '@/components/UI'
+import router from './router/router'
 
 const app = createApp(App)
 
@@ -9,7 +10,9 @@ components.forEach(component => {
 })
 
 
-app.mount('#app')
+app
+    .use(router)
+    .mount('#app')
 
 // 10.06.22
-// 01:58:36
+// 02:11:08
