@@ -3,6 +3,8 @@ import App from './App'
 import components from '@/components/UI'
 import router from './router/router'
 import directives from './directives/'
+import store from './store'
+// import postModule from './postModule'
 
 const app = createApp(App)
 
@@ -16,7 +18,8 @@ directives.forEach(directive => {
 
 app
     .use(router)
+    .use(store)
     .mount('#app')
 
 // 10.06.22
-// 02:18:15
+// 02:47:20
